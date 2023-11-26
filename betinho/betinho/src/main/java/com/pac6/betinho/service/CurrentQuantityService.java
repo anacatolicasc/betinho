@@ -6,15 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pac6.betinho.model.CurrentQuantity;
-import com.pac6.betinho.repository.ICurrentQuantity;
+import com.pac6.betinho.repository.CurrentQuantityRepository;
 
 @Service
 public class CurrentQuantityService {
 
-	private ICurrentQuantity repository;
+	private CurrentQuantityRepository repository;
 	
 	@Autowired
-	public CurrentQuantityService(ICurrentQuantity repository) {
+	public CurrentQuantityService(CurrentQuantityRepository repository) {
 		this.repository = repository;
 	}
 	

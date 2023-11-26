@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.pac6.betinho.model.CurrentQuantity;
 
 @Repository
-public interface ICurrentQuantity extends JpaRepository<CurrentQuantity, Long> {
+public interface CurrentQuantityRepository extends JpaRepository<CurrentQuantity, Long> {
 
 }

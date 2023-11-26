@@ -6,15 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pac6.betinho.model.ScheduledTime;
-import com.pac6.betinho.repository.IScheduledTime;
+import com.pac6.betinho.repository.ScheduledTimeRepository;
 
 @Service
 public class ScheduledTimeService {
 	
-	private IScheduledTime repository;
+	private ScheduledTimeRepository repository;
 	
 	@Autowired
-	public ScheduledTimeService(IScheduledTime repository) {
+	public ScheduledTimeService(ScheduledTimeRepository repository) {
 		this.repository = repository;
 	}
 	
@@ -31,6 +31,10 @@ public class ScheduledTimeService {
 	public ScheduledTime update(ScheduledTime ScheduledTime) {
 		ScheduledTime newScheduledTime = repository.save(ScheduledTime);
 		return newScheduledTime;
+	}
+	
+	public List<ScheduledTime> findByUserId(Long id) {
+	    return repository.findByUserId(id);
 	}
 
 }
