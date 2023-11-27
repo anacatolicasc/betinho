@@ -1,5 +1,6 @@
 package com.pac6.betinho.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +12,10 @@ import com.pac6.betinho.service.UserService;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private final UserService userService;
-
+	
+	private final UserService userService;
+	
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }

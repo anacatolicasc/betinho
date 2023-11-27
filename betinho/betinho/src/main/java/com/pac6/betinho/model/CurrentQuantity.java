@@ -32,36 +32,4 @@ public class CurrentQuantity {
 	@ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public LocalDateTime getDateTime() {
-		return dateTime;
-	}
-
-	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
-	}
-
-	public Float getGrams() {
-		return grams;
-	}
-
-	public void setGrams(Float grams) {
-		this.grams = grams;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
 }

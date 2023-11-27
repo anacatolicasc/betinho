@@ -3,6 +3,8 @@ package com.pac6.betinho.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.pac6.betinho.model.CurrentQuantity;
@@ -13,9 +15,12 @@ public class CurrentQuantityService {
 
 	private CurrentQuantityRepository repository;
 	
+	private UserService userService;
+	
 	@Autowired
-	public CurrentQuantityService(CurrentQuantityRepository repository) {
+	public CurrentQuantityService(CurrentQuantityRepository repository, UserService userService) {
 		this.repository = repository;
+		this.userService = userService;
 	}
 	
 	public List<CurrentQuantity> list() {
@@ -24,12 +29,22 @@ public class CurrentQuantityService {
 	}
 	
 	public CurrentQuantity create(CurrentQuantity currentQuantity) {
-		CurrentQuantity newCurrentQuantity = repository.save(currentQuantity);
-		return newCurrentQuantity;
+		return repository.save(currentQuantity);
 	}
 	
 	public CurrentQuantity update(CurrentQuantity currentQuantity) {
-		CurrentQuantity newCurrentQuantity = repository.save(currentQuantity);
-		return newCurrentQuantity;
+		return repository.save(currentQuantity);
 	}
+	
+    public ResponseEntity<CurrentQuantity> createCurrentQuantity(CurrentQuantity currentQuantity, String token) {
+        Long userId = userService.getUserByToken(token);
+
+        if (userService.userExists(userId)) {
+            currentQuantity.setUser(userService.getUserById(userId));
+            CurrentQuantity createdCurrentQuantity = create(currentQuantity);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdCurrentQuantity);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
 }

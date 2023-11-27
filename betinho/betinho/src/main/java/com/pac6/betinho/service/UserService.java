@@ -1,5 +1,6 @@
 package com.pac6.betinho.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
@@ -17,6 +18,7 @@ public class UserService {
 	private Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final UserRepository userRepository;
 
+    @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

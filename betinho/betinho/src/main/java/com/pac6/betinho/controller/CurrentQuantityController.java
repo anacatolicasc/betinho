@@ -2,7 +2,7 @@ package com.pac6.betinho.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,18 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pac6.betinho.model.CurrentQuantity;
 import com.pac6.betinho.service.CurrentQuantityService;
-import com.pac6.betinho.service.UserService;
 
 @RestController
 @RequestMapping("/currentQuantity")
 public class CurrentQuantityController {
 	
 	private CurrentQuantityService currentQuantityService;
-	private UserService userService;
 	
-	public CurrentQuantityController(CurrentQuantityService currentQuantityService, UserService userService) {
+	@Autowired
+	public CurrentQuantityController(CurrentQuantityService currentQuantityService) {
 		this.currentQuantityService = currentQuantityService;
-		this.userService = userService;
 	}
 	
 	@GetMapping
@@ -35,15 +33,7 @@ public class CurrentQuantityController {
 	
 	@PostMapping("/create")
 	public ResponseEntity<CurrentQuantity> createCurrentQuantity (@RequestBody CurrentQuantity currentQuantity, @RequestParam String token) {
-        Long userId = userService.getUserByToken(token);
-        
-        if (userService.userExists(userId)) {
-            currentQuantity.setUser(userService.getUserById(userId));
-            CurrentQuantity createdCurrentQuantity = currentQuantityService.create(currentQuantity);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdCurrentQuantity);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+		return currentQuantityService.createCurrentQuantity(currentQuantity, token);
 	}
 	
 	@PutMapping
