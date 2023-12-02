@@ -27,9 +27,9 @@ public class ScheduledTimeController {
 	}
 	
 	@GetMapping("/getAll")
-	public ResponseEntity<List<ScheduledTime>> findScheduledTime(@RequestParam String token) {
-		return scheduledTimeService.findScheduledTimeByUserId(token);
-	}
+    public ResponseEntity<List<ScheduledTime>> findScheduledTime(@RequestParam String token) {
+        return scheduledTimeService.findScheduledTimeByUserId(token);
+    }
 	
 	@PostMapping
 	public ResponseEntity<ScheduledTime> createScheduledTime (@RequestBody ScheduledTime scheduledTime, @RequestParam String token) {

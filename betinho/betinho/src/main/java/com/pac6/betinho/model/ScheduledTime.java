@@ -2,6 +2,9 @@ package com.pac6.betinho.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor
+@JsonInclude(value = Include.NON_NULL)
 @Table(name = "SCHEDULED_TIME", schema = "public")
 public class ScheduledTime {
 	@Id

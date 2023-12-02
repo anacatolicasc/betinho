@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.pac6.betinho.model.CurrentQuantity;
 import com.pac6.betinho.repository.CurrentQuantityRepository;
 
+import io.jsonwebtoken.lang.Assert;
+
 @Service
 public class CurrentQuantityService {
 
@@ -37,6 +39,7 @@ public class CurrentQuantityService {
 	}
 	
     public ResponseEntity<CurrentQuantity> createCurrentQuantity(CurrentQuantity currentQuantity, String token) {
+    	Assert.isTrue(currentQuantity.getId() == null, "ID não deve ser informado.");
         Long userId = userService.getUserByToken(token);
 
         if (userService.userExists(userId)) {
