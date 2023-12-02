@@ -1,6 +1,7 @@
 package com.pac6.betinho.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.pac6.betinho.dto.ScheduledTimeResponse;
 import com.pac6.betinho.model.ScheduledTime;
 import com.pac6.betinho.repository.ScheduledTimeRepository;
 
@@ -44,7 +46,7 @@ public class ScheduledTimeService {
 	    return repository.findByUserId(id);
 	}
 	
-    public ResponseEntity<List<ScheduledTime>> findScheduledTimeByUserId(String token) {
+	public ResponseEntity<List<ScheduledTimeResponse>> findScheduledTimeByUserId(String token) {
         Long userId = userService.getUserByToken(token);
         List<ScheduledTime> scheduledTimes = findByUserId(userId);
 
@@ -53,8 +55,14 @@ public class ScheduledTimeService {
             List<ScheduledTime> filteredScheduledTimes = filterByCurrentDate(scheduledTimes, currentDate);
             
             if (!filteredScheduledTimes.isEmpty()) {
-                filteredScheduledTimes.forEach(scheduledTime -> scheduledTime.setUser(null));
-                return ResponseEntity.status(HttpStatus.OK).body(filteredScheduledTimes);
+                List<ScheduledTimeResponse> listResponse = new ArrayList<>();
+                filteredScheduledTimes.forEach(scheduledTime -> {
+                    listResponse.add(ScheduledTimeResponse
+                                        .builder()
+                                        .time(scheduledTime.getDateTime().toLocalTime())
+                                        .build());
+                });
+                return ResponseEntity.status(HttpStatus.OK).body(listResponse);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
@@ -62,7 +70,7 @@ public class ScheduledTimeService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-    
+	
     private List<ScheduledTime> filterByCurrentDate(List<ScheduledTime> scheduledTimes, LocalDate currentDate) {
         return scheduledTimes.stream()
                 .filter(scheduledTime -> scheduledTime.getDateTime().toLocalDate().isEqual(currentDate))

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pac6.betinho.dto.ScheduledTimeResponse;
 import com.pac6.betinho.model.ScheduledTime;
 import com.pac6.betinho.service.ScheduledTimeService;
 
@@ -27,7 +28,7 @@ public class ScheduledTimeController {
 	}
 	
 	@GetMapping("/getAll")
-    public ResponseEntity<List<ScheduledTime>> findScheduledTime(@RequestParam String token) {
+    public ResponseEntity<List<ScheduledTimeResponse>> findScheduledTime(@RequestParam String token) {
         return scheduledTimeService.findScheduledTimeByUserId(token);
     }
 	
